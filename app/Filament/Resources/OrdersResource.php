@@ -10,8 +10,6 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class OrdersResource extends Resource
 {
@@ -29,9 +27,6 @@ class OrdersResource extends Resource
                 Forms\Components\Select::make('tiempo_id')
                     ->label('Tiempo')
                     ->relationship('tiempo', 'nombre'),
-                Forms\Components\Select::make('estado_id')
-                    ->label('Estado')
-                    ->relationship('estado', 'name'),
             ]);
     }
 
@@ -82,7 +77,7 @@ class OrdersResource extends Resource
         return [
             'index' => Pages\ListOrders::route('/'),
             'create' => Pages\CreateOrders::route('/create'),
-            'edit' => Pages\EditOrders::route('/{record}/edit'),
+            'edit' => Pages\EditOrders::route(path: '/{record}/edit'),
         ];
     }
 }
