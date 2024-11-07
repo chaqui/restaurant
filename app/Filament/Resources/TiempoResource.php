@@ -23,7 +23,9 @@ class TiempoResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('nombre')
+                    ->label('Nombre')
+                    ->required(),
             ]);
     }
 
@@ -31,7 +33,8 @@ class TiempoResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('nombre')
+                    ->label('Nombre'),
             ])
             ->filters([
                 //

@@ -16,8 +16,10 @@ return new class extends Migration
             $table->string('nombre');
             $table->decimal('precio', 8, 2);
             $table->string('descripcion');
-            $table->string('imagen');
+            $table->string('imagen')->nullable();
             $table->integer('tipo_id')->unsigned();
+            $table->integer('producto_id')->unsigned()->nullable();
+            $table->foreign('producto_id')->references('id')->on('productos');
             $table->foreign('tipo_id')->references('id')->on('tipos');
             $table->timestamps();
         });

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Orders extends Model
 {
     protected $table = 'orders';
-    protected $fillable = ['total','mesa_id','tiempo_id'];
+    protected $fillable = ['total','mesa_id','tiempo_id', 'estado_id'];
 
     public function mesa()
     {
@@ -19,8 +19,13 @@ class Orders extends Model
         return $this->belongsTo(Tiempo::class);
     }
 
-    public function products()
+    public function OrdenProductos()
     {
         return $this->hasMany(OrdenProducto::class);
+    }
+
+    public function estado()
+    {
+        return $this->belongsTo(Estado::class);
     }
 }

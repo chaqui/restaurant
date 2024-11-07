@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->decimal('total', 8, 2);
+            $table->decimal('total', 8, 2)->default(0);
             $table->integer('mesa_id')->unsigned();
             $table->integer('tiempo_id')->unsigned();
+            $table->integer('estado_id')->unsigned();
             $table->foreign('mesa_id')->references('id')->on('mesas');
+            $table->foreign('estado_id')->references('id')->on('estados');
             $table->foreign('tiempo_id')->references('id')->on('tiempos');
             $table->timestamps();
         });

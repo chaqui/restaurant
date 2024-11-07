@@ -23,7 +23,9 @@ class TipoResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('name')
+                    ->label('Nombre')
+                    ->required(),
             ]);
     }
 
@@ -31,7 +33,8 @@ class TipoResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Nombre'),
             ])
             ->filters([
                 //
@@ -49,7 +52,7 @@ class TipoResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\ProductsRelationManager::class,
         ];
     }
 

@@ -9,4 +9,9 @@ class Tipo extends Model
     protected $table = 'tipos';
     protected $fillable = ['name'];
     public $timestamps = false;
+
+    public function products()
+    {
+        return $this->hasMany(Producto::class);
+    }
 }
