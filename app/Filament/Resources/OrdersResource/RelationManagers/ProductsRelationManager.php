@@ -7,8 +7,8 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Log;
+use App\Models\OrdenProducto;
 
 class ProductsRelationManager extends RelationManager
 {
@@ -45,7 +45,9 @@ class ProductsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()
+                ->createAnother(false)
+                ->label('Agregar Producto'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

@@ -33,6 +33,8 @@ class EstadoResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('id')
+                    ->label(label: 'Id'),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nombre'),
             ])

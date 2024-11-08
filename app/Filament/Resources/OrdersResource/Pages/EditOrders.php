@@ -18,7 +18,8 @@ class EditOrders extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            Actions\DeleteAction::make()->
+             label('Eliminar'),
             Actions\Action::make("Cobrar")
                 ->action(function (array $data, Orders $record): void {
                     Log::info($record);
@@ -32,8 +33,10 @@ class EditOrders extends EditRecord
                     }
                     $record->total = $total;
                     $record->save();
+                    $this->fillForm();
                 })
                 ->requiresConfirmation()
+
                 ->button(),
         ];
     }
