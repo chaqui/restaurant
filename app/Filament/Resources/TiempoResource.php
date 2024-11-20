@@ -33,6 +33,10 @@ class TiempoResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('id')
+                    ->label('Id')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('nombre')
                     ->label('Nombre'),
             ])
