@@ -4,7 +4,8 @@ namespace App\Filament\Pages;
 
 use Filament\Pages\Page;
 use App\Models\Orders;
-use App\Models\Mesa;
+use App\Services\MesaService;
+use App\Services\OrderService;
 class OrdenesMesa extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
@@ -19,10 +20,11 @@ class OrdenesMesa extends Page
 
     public function mount($id)
     {
+        $mesaService = new MesaService();
+        $orderService = new OrderService();
         $this->mesaId = $id;
-        $this->mesa = Mesa::where('id', $id)->first();
-
-        $this->ordenes = Orders::where('mesa_id', $id)->get();
+        $this->mesa = $mesaService->getMesaById($id);
+        $this->ordenes = $orderService->getOrdersByTableId($id);
     }
     public static function shouldRegisterNavigation(): bool
     {

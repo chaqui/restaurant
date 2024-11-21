@@ -2,7 +2,7 @@
     @section('title', 'Órdenes de Mesa: ' . $mesa->name)
 
     <div class="flex justify-end mb-4">
-        <x-filament::button tag="a" href="{{ route('filament.pages.create-orden', ['id' => $mesaId]) }}">
+        <x-filament::button tag="a" href="{{ route('filament.pages.create-orden', ['mesaId' => $mesaId]) }}">
             Crear Orden
         </x-filament::button>
     </div>

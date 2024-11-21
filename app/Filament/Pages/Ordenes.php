@@ -3,7 +3,7 @@
 namespace App\Filament\Pages;
 
 use Filament\Pages\Page;
-use App\Models\Mesa;
+use App\Services\MesaService;
 
 class Ordenes extends Page
 {
@@ -15,7 +15,7 @@ class Ordenes extends Page
 
     public function mount()
     {
-
-        $this->mesas = Mesa::all();
+        $mesaService = new MesaService();
+        $this->mesas = $mesaService->getMesas();
     }
 }

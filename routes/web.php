@@ -8,4 +8,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/ordenes-mesa/{id}', OrdenesMesa::class)->name('filament.pages.ordenes-mesa');
-Route::get('/create-orden/{id}', CreateOrden::class)->name('filament.pages.create-orden');
+Route::get('/create-orden/{mesaId}', CreateOrden::class)->name('filament.pages.create-orden');

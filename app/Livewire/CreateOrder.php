@@ -1,18 +1,16 @@
 <?php
 
-namespace App\Filament\Pages;
+namespace App\Http\Livewire;
 
-use Filament\Pages\Page;
+use Livewire\Component;
 use App\Services\OrderService;
 use App\Services\ProductService;
 use App\Services\OrderProductoService;
 use Illuminate\Support\Facades\Log;
 
-class CreateOrden extends Page
+class CreateOrder extends Component
 {
-    protected static ?string $navigationIcon = 'heroicon-o-plus';
 
-    protected static string $view = 'filament.pages.create-orden';
 
     public $mesaId;
     public $productos;
@@ -68,5 +66,10 @@ class CreateOrden extends Page
         $this->orderService = new OrderService();
         $this->productService = new ProductService();
         $this->orderProductoService = new OrderProductoService();
+    }
+
+    public function render()
+    {
+        return view('livewire.create-order');
     }
 }
