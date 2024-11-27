@@ -17,12 +17,14 @@
 
         @filamentStyles
         @vite('resources/css/app.css')
+        @livewireStyles
     </head>
 
     <body class="antialiased">
         {{ $slot }}
 
         @filamentScripts
+        @livewireScripts
         @vite('resources/js/app.js')
     </body>
 </html>

@@ -20,7 +20,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Route::get('/admin/ordenes-mesa/{id}', [OrdenesMesa::class, 'render'])
-        ->name('filament.pages.ordenes-mesa');
+
     }
 }

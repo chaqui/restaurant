@@ -51,5 +51,15 @@ class OrderService
         ]);
     }
 
+    public function update($id, $data)
+    {
+        return Orders::where('id', $id)->update($data);
+    }
+
+    public function getById($id)
+    {
+        return Orders::where('id', $id)->first();
+    }
+
 
 }

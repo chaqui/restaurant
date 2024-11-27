@@ -15,4 +15,19 @@ class ProductService
     {
         return Producto::where('id', $id)->first();
     }
+
+    public function createProduct(array $data)
+    {
+        return Producto::create($data);
+    }
+
+    public function updateProduct(array $data, $id)
+    {
+        return Producto::where('id', $id)->update($data);
+    }
+
+    public function deleteProduct($id)
+    {
+        return Producto::where('id', $id)->delete();
+    }
 }
