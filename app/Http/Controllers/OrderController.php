@@ -28,4 +28,17 @@ class OrderController extends Controller
          $this->orderService->addProduct($id, $request->idProducto);
         return response()->json(['message' => 'Producto agregado correctamente']);
     }
+
+    public function removeProduct(Request $request, $id)
+    {
+        $this->orderService->removeProduct($id, $request->idProducto);
+        return response()->json(['message' => 'Producto eliminado correctamente']);
+    }
+
+    public function changeState(Request $request, $id)
+    {
+        $this->orderService->changeState($id, $request->estado_id);
+
+        return response()->json(['message' => 'Estado cambiado correctamente']);
+    }
 }

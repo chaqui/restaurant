@@ -4,8 +4,8 @@ namespace App\Services;
 
 use App\Models\Orders;
 use App\Models\OrdenProducto;
+use App\States\ContextState;
 use Carbon\Carbon;
-use League\CommonMark\Node\Query\OrExpr;
 
 class OrderService
 {
@@ -59,6 +59,18 @@ class OrderService
     public function getById($id)
     {
         return Orders::where('id', $id)->first();
+    }
+
+    public function changeState($id, $id_state)
+    {
+        $order = Orders::where('id', $id)->first();
+        $context = new ContextState($id_state);
+        $context->handle($order);
+    }
+
+    public function removeProduct($id, $productId)
+    {
+        OrdenProducto::where('orders_id', $id)->where('producto_id', $productId)->update(['cantidad' => 0]);
     }
 
 
