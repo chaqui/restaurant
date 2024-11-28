@@ -17,14 +17,14 @@ class OrderService
         return Orders::where('mesa_id', $id)->get();
     }
 
-    private function getOrdersByStates($states){
-        return Orders::whereIn('estado_id', $states)->get();
+    private function getOrdersByStates($states, $id_mesa){
+        return Orders::whereIn('estado_id', $states)->where('mesa_id', $id_mesa)->get();
     }
 
 
     public function createOrder($mesaId)
     {
-        $ordenes = $this->getOrdersByStates([States::OPEN, States::IN_KITCHEN, States::SERVED]);
+        $ordenes = $this->getOrdersByStates([States::OPEN, States::IN_KITCHEN, States::SERVED], $mesaId);
         if($ordenes->count() > 0){
             return $ordenes->first();
         }

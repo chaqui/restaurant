@@ -7,4 +7,12 @@ class OrderProductoService
     {
         return OrdenProducto::where('orders_id', $id)->get();
     }
+
+    public function update($id,$cantidad)
+    {
+        $ordenProducto = OrdenProducto::where('id', $id)->first();
+        $ordenProducto->cantidad = $cantidad;
+        $ordenProducto->save();
+        return $ordenProducto;
+    }
 }
