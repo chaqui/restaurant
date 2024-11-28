@@ -5,6 +5,6 @@ class OrderProductoService
 {
     public function getProductsByOrderId($id)
     {
-        return OrdenProducto::where('orden_id', $id)->get();
+        return OrdenProducto::where('orders_id', $id)->get();
     }
 }

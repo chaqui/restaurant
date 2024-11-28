@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Services;
+use Carbon\Carbon;
 
 use App\Models\Orders;
 use App\Models\OrdenProducto;
 use App\States\ContextState;
-use Carbon\Carbon;
+use App\Utils\Constants\States;
+use App\Utils\Constants\Tiempos;
+
 
 class OrderService
 {
@@ -14,18 +17,18 @@ class OrderService
         return Orders::where('mesa_id', $id)->get();
     }
 
-    public function createOrder($mesaId = null)
-    {
-        $orders = Orders::where(['mesa_id', $mesaId], ['estado_id', '<>', '3'])->get();
-        if ($orders->count() > 0) {
-            return $orders->first();
-        }
-        return $this->createOrderIfNotExist($mesaId);
+    private function getOrdersByStates($states){
+        return Orders::whereIn('estado_id', $states)->get();
     }
 
-    private function createOrderIfNotExist($mesaId)
+
+    public function createOrder($mesaId)
     {
-        $tiempo = $this->isBeforeSixPM() ? 1 : 2;
+        $ordenes = $this->getOrdersByStates([States::OPEN, States::IN_KITCHEN, States::SERVED]);
+        if($ordenes->count() > 0){
+            return $ordenes->first();
+        }
+        $tiempo = $this->isBeforeSixPM() ? Tiempos::ALMUERZO  : Tiempos::CENA;
         return Orders::create([
             'mesa_id' => $mesaId,
             'total' => 0,
@@ -42,19 +45,15 @@ class OrderService
         return $currentTime->lessThan($sixPM);
     }
 
-    public function addProduct($orden_id, $productId): void
+    public function addProduct($orden_id, $productId, $cantidad): void
     {
-        OrdenProducto::create([
+        OrdenProducto::create(attributes: [
             'orders_id' => $orden_id,
             'producto_id' => $productId,
-            'cantidad' => 1
+            'cantidad' => $cantidad
         ]);
     }
 
-    public function update($id, $data)
-    {
-        return Orders::where('id', $id)->update($data);
-    }
 
     public function getById($id)
     {
@@ -70,8 +69,10 @@ class OrderService
 
     public function removeProduct($id, $productId)
     {
-        OrdenProducto::where('orders_id', $id)->where('producto_id', $productId)->update(['cantidad' => 0]);
+        $orderProducto = OrdenProducto::where('orders_id', $id)->where('producto_id', $productId);
+        if ($orderProducto->cantidad > 0) {
+            $orderProducto->cantidad -= 1;
+            $orderProducto->save();
+        }
     }
-
-
 }

@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Resources\Producto as ProductoResource;
+use App\Http\Resources\Order as OrderResource;
+use App\Http\Resources\OrdenProducto as OrdenProductoResource;
 use App\Services\OrderProductoService;
 use App\Services\OrderService;
+
 class OrderController extends Controller
 {
     private $orderProductoService;
@@ -20,19 +23,7 @@ class OrderController extends Controller
     public function getProducts($id)
     {
         $products = $this->orderProductoService->getProductsByOrderId($id);
-        return ProductoResource::collection($products);
-    }
-
-    public function addProduct(Request $request, $id)
-    {
-         $this->orderService->addProduct($id, $request->idProducto);
-        return response()->json(['message' => 'Producto agregado correctamente']);
-    }
-
-    public function removeProduct(Request $request, $id)
-    {
-        $this->orderService->removeProduct($id, $request->idProducto);
-        return response()->json(['message' => 'Producto eliminado correctamente']);
+        return OrdenProductoResource::collection($products);
     }
 
     public function changeState(Request $request, $id)
@@ -40,5 +31,31 @@ class OrderController extends Controller
         $this->orderService->changeState($id, $request->estado_id);
 
         return response()->json(['message' => 'Estado cambiado correctamente']);
+    }
+
+    public function getOrder($id)
+    {
+        $order = $this->orderService->getById($id);
+        return new OrderResource($order);
+    }
+
+    public function addProduct(Request $request, $id)
+    {
+        $this->orderService->addProduct($id, $request->producto_id, $request->cantidad);
+
+        return response()->json(['message' => 'Producto agregado correctamente']);
+    }
+
+    public function createOrder($mesa_id)
+    {
+        $order = $this->orderService->createOrder($mesa_id);
+        return new OrderResource($order);
+    }
+
+    public function removerProduct($id,$idProduct)
+    {
+        $this->orderService->removeProduct($id, $idProduct);
+
+        return response()->json(['message' => 'Producto eliminado correctamente']);
     }
 }
